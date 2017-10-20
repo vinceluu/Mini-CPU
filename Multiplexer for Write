@@ -1,0 +1,16 @@
+module multi_WB(wALUOut, wdatamemout, wm2reg, d);
+
+    input [31:0] wALUOut;
+    input [31:0] wdatamemout;
+    input wm2reg;
+    output reg [31:0] d;
+    
+    always@(wALUOut or wdatamemout or wm2reg)
+    begin
+    if (wm2reg == 1'b0)
+    d <= wALUOut;
+    else
+    d <= wdatamemout;
+    end
+    
+endmodule
