@@ -1,0 +1,28 @@
+module mem(pc, dataout);
+    input [31:0] pc;
+    output reg [31:0] dataout;
+
+    
+    reg [31:0] MEM[255:0];
+    
+    initial
+    begin
+    //MEM[25] <= 32'h00692825;  
+    MEM[25] <= 32'h00221820;
+    MEM[26] <= 32'h00000000;
+    MEM[27] <= 32'h00000000;
+    
+    MEM[28] <= 32'h01232022;
+    MEM[29] <= 32'h00692825;
+    MEM[30] <= 32'h00693026;
+    MEM[31] <= 32'h00693824;
+                
+       
+    end
+    
+    always@(pc)
+    begin
+        dataout <= MEM[pc>>2];
+    end
+    
+endmodule
