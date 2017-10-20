@@ -1,0 +1,51 @@
+module regfile(rs, rt, wn, d, we, clk, qa, qb, complete_pipeline); 
+    input [4:0] rs;
+    input [4:0] rt;
+    input [4:0] wn;
+    input [31:0] d;
+    input we;
+    input clk;
+    output [31:0] qa;
+    output [31:0] qb;
+    output reg complete_pipeline;
+    
+    
+    reg [31:0] register[31:0];
+    
+    initial
+    begin
+    register [0] <= 32'b0;
+    register [1] <= 32'b1;
+    register [2] <= 32'b11;
+    register [3] <= 32'b101;
+    register [4] <= 32'b10;
+    register [5] <= 32'b0;
+    register [6] <= 32'b0;
+    register [7] <= 32'b1;
+    register [8] <= 32'b0;
+    register [9] <= 32'b1010;
+    register [10] <= 32'b0;
+    end
+    
+         assign qa = register[rs];
+         assign qb = register [rt];
+         
+         always@(*)
+            begin 
+               if(we)
+               begin
+                   register[wn] <= d;
+               end
+               
+               if (register[7] == 32'b0)
+               begin
+               complete_pipeline <= 1'b1;
+               end
+               else
+               begin
+               complete_pipeline <= 1'b0;
+               end
+            end
+            
+            
+endmodule
