@@ -1,0 +1,20 @@
+module incrementer(pc, controlunit, npc);
+    input [31:0] pc;
+    input controlunit;
+    output reg [31:0] npc;
+    
+    parameter INCREMENT_AMOUNT = 32'd4;
+   
+    always@(*)
+    begin
+    if(controlunit == 1'b1)
+    begin
+    npc = pc + INCREMENT_AMOUNT;
+    end
+    else
+    begin
+    npc = pc;
+    end
+    end
+    
+endmodule
