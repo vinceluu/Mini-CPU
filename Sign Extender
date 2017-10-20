@@ -1,0 +1,10 @@
+module sign_extension(imm, extended);
+    input  [15:0] imm;
+    output reg [31:0] extended;
+    
+    
+    always@(*)
+    begin
+    extended <= {{16{imm[15]}},imm[15:0]};
+    end
+endmodule
