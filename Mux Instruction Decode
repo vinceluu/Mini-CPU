@@ -1,0 +1,16 @@
+module mux_ID(regrt, rd, rt, selection);
+    input regrt;
+    input [4:0] rd;
+    input [4:0] rt;
+    output reg [4:0] selection;
+    
+    
+    always@(rd or rt or regrt)
+    begin
+    if(regrt == 1'b1)
+    selection <= rt;
+    else
+    selection <= rd;
+    end
+    
+endmodule
