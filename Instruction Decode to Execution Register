@@ -1,0 +1,35 @@
+module ID_EXE(clk, wreg, m2reg, wmem, aluc, aluimm, selection, qa, qb, extended, ewreg, em2reg, ewmem, ealuc, ealuimm, eselection, A, eqb, e_extended);
+    input clk;
+    input wreg;
+    input m2reg;
+    input wmem;
+    input [3:0] aluc;
+    input aluimm;
+    input [4:0] selection;
+    input [31:0] qa;
+    input [31:0] qb;
+    input [31:0] extended;
+    output reg ewreg;
+    output reg em2reg;
+    output reg ewmem;
+    output reg [3:0] ealuc;
+    output reg ealuimm;
+    output reg [31:0] eselection;
+    output reg [31:0] A;
+    output reg [31:0] eqb;
+    output reg [31:0] e_extended;
+    
+    always@(posedge clk)
+    begin
+    ewreg <= wreg;
+    em2reg <= m2reg;
+    ewmem <= wmem;
+    ealuc <= aluc;
+    ealuimm <= aluimm;
+    eselection <= selection;
+    A <= qa;
+    eqb <= qb; 
+    e_extended <= extended;
+    end
+    
+endmodule
