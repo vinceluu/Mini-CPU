@@ -1,0 +1,23 @@
+module IF_ID(dataout, clk, op, func, rs, rt, rd, imm);
+    input [31:0] dataout;
+    input clk;
+    
+    output reg [5:0] op;
+    output reg [5:0] func;
+    output reg [4:0] rs;
+    output reg [4:0] rt;
+    output reg [4:0] rd;
+    output reg [15:0] imm;
+    
+    always@(posedge clk)
+    begin  
+    op <= dataout[31:26];
+    func <= dataout[5:0];
+    rs <= dataout[25:21];
+    rt <= dataout[20:16];
+    rd <= dataout[15:10];
+    imm <= dataout[15:0];
+    end
+    
+    
+endmodule
