@@ -1,0 +1,30 @@
+module data_mem(mALUOut, mqb, mwmem, datamemout);
+
+    input [31:0] mALUOut;
+    input [31:0] mqb;
+    input mwmem;
+    output reg [31:0] datamemout;
+    
+    reg [31:0] MEMORY[255:0];
+    
+    initial 
+    begin
+        MEMORY[0] <= 32'hA00000AA;
+        MEMORY[1] <= 32'h10000011;
+        MEMORY[2] <= 32'h20000022;
+        MEMORY[3] <= 32'h30000033;
+        MEMORY[4] <= 32'h40000044;
+        MEMORY[5] <= 32'h50000055;
+        MEMORY[6] <= 32'h60000066;
+        MEMORY[7] <= 32'h70000077;
+        MEMORY[8] <= 32'h80000088;
+        MEMORY[9] <= 32'h90000099;
+    end
+    
+    always@(*)
+    begin 
+    if (mwmem == 1'b0)
+    datamemout <= MEMORY[mALUOut>>2];
+    else
+    ;
+    end
