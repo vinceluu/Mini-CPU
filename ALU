@@ -1,0 +1,34 @@
+module ALU(ealuc, A, B, ALUOut);
+
+    input [3:0] ealuc;
+    input [31:0] A;
+    input [31:0] B;
+    output reg [31:0] ALUOut;
+    
+    always@(*)
+    begin
+        case(ealuc)
+            4'b0010:
+            begin
+            ALUOut <= A + B; //add for lw
+            end
+            4'b0110:
+            begin
+            ALUOut <= A - B;
+            end
+            4'b0001:
+            begin
+            ALUOut <= A | B;
+            end
+            4'b1111:
+            begin
+            ALUOut <= A ^ B;
+            end
+            4'b0000:
+            begin
+            ALUOut <= A & B;
+            end
+        endcase
+    end    
+          
+endmodule
