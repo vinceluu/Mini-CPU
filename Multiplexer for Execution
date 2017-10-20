@@ -1,0 +1,16 @@
+module multi_EXE(e_extended, eqb, ealuimm, B);
+    
+    input [31:0] e_extended;
+    input [31:0] eqb;
+    input ealuimm;
+    output reg [31:0] B;
+    
+    always@(e_extended or eqb or ealuimm)
+    begin 
+    if(ealuimm == 1'b0)
+    B <= eqb;
+    else
+    B <= e_extended;
+    end
+
+endmodule
