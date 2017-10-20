@@ -1,0 +1,71 @@
+module topmodule(clk,rst, controlunit, complete_pipeline);
+    input clk;
+    input rst;
+    input controlunit;
+    wire [31:0] npc;
+    wire [31:0] pc;
+    wire [31:0] dataout;
+    wire [5:0] op;
+    wire [5:0] func;
+    wire [4:0] rs;
+    wire [4:0] rt;
+    wire [4:0] rd;
+    wire [15:0] imm;
+    wire wreg;
+    wire m2reg;
+    wire wmem;
+    wire [3:0] aluc;
+    wire aluimm;
+    wire regrt;
+    wire [4:0] selection;
+    wire [31:0] qa;
+    wire [31:0] qb;
+    wire we;
+    wire [4:0] wn;
+    wire [31:0] d;
+    wire [31:0] extended;
+    wire ewreg;
+    wire em2reg;
+    wire ewmem;
+    wire [3:0] ealuc;
+    wire ealuimm;
+    wire [4:0] eselection;
+    wire [31:0] A;
+    wire [31:0] eqb; 
+    wire [31:0] e_extended;
+    wire [31:0] B;
+    wire [31:0] ALUOut;
+    wire mwmem;
+    wire [31:0] mqb;
+    wire mwreg;
+    wire mm2reg;
+    wire [4:0] mselection;
+    wire [31:0] mALUOut;
+    wire [31:0] datamemout;
+    wire [31:0] wdatamemout;
+    wire [31:0] wALUOut;
+    wire wm2reg;
+    output wire complete_pipeline;
+    
+       
+    //Declaration of modules
+    //Instruction Fetch and Decode
+    program_counter programc(npc, clk, rst, pc);
+    incrementer increment(pc, controlunit, npc);
+    mem instmem(pc, dataout);
+    IF_ID register1(dataout, clk, op, func, rs, rt, rd, imm);
+    control_unit control(op, func, clk, wreg, m2reg,wmem, aluc, aluimm, regrt);
+    mux_ID mult(regrt, rd, rt, selection);
+    regfile RF(rs, rt, wn, d, we, clk, qa, qb, complete_pipeline);
+    sign_extension extension(imm, extended);
+    
+    //Instruction Execution and Memory 
+    ID_EXE register2(clk, wreg, m2reg, wmem, aluc, aluimm, selection, qa, qb, extended, ewreg, em2reg, ewmem, ealuc, ealuimm, eselection, A, eqb, e_extended);
+    multi_EXE mult2(e_extended, eqb, ealuimm, B);
+    ALU alu_out(ealuc, A, B, ALUOut);
+    EXE_MEM register3(clk, ewreg, em2reg, ewmem, eselection, ALUOut, eqb, mwreg, mm2reg, mwmem, mselection, mALUOut, mqb);
+    data_mem memory(mALUOut, mqb, mwmem, datamemout);
+    
+    //Instruction Write
+    MEM_WB register4(clk, mwreg, mm2reg, mselection, mALUOut, datamemout, we, wm2reg, wn, wALUOut, wdatamemout);
+    multi_WB mult3(wALUOut, wdatamemout, wm2reg, d);
